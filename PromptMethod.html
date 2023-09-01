@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bookstore Inventory</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bookstore Inventory</h1>
+    <form id="bookForm">
+        <h2>Enter book details for 20 books:</h2>
+        <div id="bookDetails"></div>
+        <input type="submit" value="Calculate Prices">
+    </form>
+    <table id="bookTable">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Language</th>
+            <th>Status</th>
+            <th>Marked Price</th>
+            <th>Price Paid</th>
+        </tr>
+    </table>
+
+    <script>
+        function promptBookDetails() {
+            const title = prompt("Enter book title:");
+            const author = prompt("Enter author name:");
+            const language = prompt("Enter language (English or French):").toLowerCase();
+            const status = prompt("Enter status (New or Used):").toLowerCase();
+            const markedPrice = parseFloat(prompt("Enter marked price:"));
+            return { title, author, language, status, markedPrice };
+        }
+
+        function calculateDiscountedPrice(language, status, markedPrice) {
+            let savings = 0;
+
+            if (language === "english") {
+                if (status === "new") {
+                    savings = 0.15;
+                } else if (status === "used") {
+                    savings = 0.08;
+                }
+            } else if (language === "french") {
+                if (status === "new") {
+                    savings = 0.20;
+                } else if (status === "used") {
+                    savings = 0.05;
+                }
+            }
+
+            const discountedPrice = markedPrice - markedPrice * savings;
+            return discountedPrice.toFixed(2);
+        }
+
+        function addBookToTable(book) {
+            const { title, author, language, status, markedPrice, pricePaid } = book;
+            const table = document.getElementById("bookTable");
+            const row = table.insertRow();
+            const cells = [
+                title, author, language, status,
+                `$${markedPrice.toFixed(2)}`, `$${pricePaid}`
+            ];
+
+            for (const cellText of cells) {
+                const cell = row.insertCell();
+                cell.textContent = cellText;
+            }
+        }
+
+        function processForm(event) {
+            event.preventDefault();
+            const bookForm = document.getElementById("bookForm");
+            const bookDetailsDiv = document.getElementById("bookDetails");
+
+            for (let i = 0; i < 20; i++) {
+                const book = promptBookDetails();
+                const pricePaid = calculateDiscountedPrice(book.language, book.status, book.markedPrice);
+                book.pricePaid = pricePaid;
+                addBookToTable(book);
+            }
+
+            bookForm.style.display = "none";
+            bookDetailsDiv.style.display = "none";
+        }
+
+        document.getElementById("bookForm").addEventListener("submit", processForm);
+    </script>
+</body>
+</html>

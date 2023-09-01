@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignment value</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row ">
+
+        </div>
+        <div class="row  " >
+                <div class="col"></div>
+                <div class="col">
+                    <h3> Description </h3>
+                    <p>
+                        You will use this page to get the information that you need to do for your assignment.
+                        The student id must have 7 digits.
+                    </p>
+                </div>
+                <div class="col"></div> 
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <div class="alert alert-danger" role="alert" id="at"  hidden>
+                    <span id="diplay_error" ></span>
+                </div>
+                <div>
+                    <input type="text" id="val" value="">
+                    <button onclick="transformation();"> Obtain value </button>
+                </div>
+                
+                <div>
+                    <br>
+                    <p>
+                        Will dive by 2 the student number end add 2 to the the remaining value.
+                    </p>
+                
+                    <label for="std1"> Std_1digit_value  : </label>
+                    <span id="std1"> </span>
+                </div>
+                
+                <div class="">
+                    <br>
+                    <p>
+                        Will add 13 to the first five number.
+                    </p>
+                    <label for="std2"> Std_2digits_value : </label>
+                    <span id="std2"> </span>
+                </div>            
+            </div>
+            <div class="col"></div>
+        </div>
+        
+    </div>
+    <script language ="javascript">
+    
+    function transformation() {
+        var valeur,erreur ;
+        valeur = document.getElementById("val").value;
+       
+        erreur =  "<ul>" ;
+        if ((!valeur=="" && !isNaN(Number(valeur)))) {
+
+            if (valeur.length == 7) { 
+                document.getElementById("at").hidden=true;
+                 document.getElementById("std1").innerHTML= (Number(valeur.slice(6))  % 2 )+ 2;
+
+                document.getElementById("std2").innerHTML= Number(valeur.slice(5)) + 13;
+
+            } else {
+                erreur += " <li>Your student Id have 7 digits </li>"
+                
+            }
+           
+           
+        } else {
+            erreur += " <li>You have to enter your student ID </li> <li>Your student Id have only number</li>"
+
+        }
+
+        console.log(erreur.length);
+     if (erreur.length>5){
+         std1 =  document.getElementById("std1").innerHTML;
+         if (std1.length>0) {
+            document.getElementById("std1").innerHTML= "";
+            document.getElementById("std2").innerHTML= "";
+         }
+         document.getElementById("at").hidden=false;
+         erreur +="</ul>";
+         console.log(erreur);
+        document.getElementById("diplay_error").innerHTML= erreur;
+     }
+
+    }
+    
+    
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
